@@ -435,5 +435,99 @@
     }
     imJs.m();
 
+    /* contact form submission */
+    $('#contact-form #submit').on( 'click', async function(e) {
+        e.preventDefault();
+
+        var name = $('#contact-name').val();
+        var email = $('#contact-email').val();
+        var phone = $('#contact-phone').val();
+        var subject = $('#subject').val();
+        var message = $('#contact-message').val();
+        var submitElem = $("#submit");
+        var errElem = $('.response-output');
+
+        if (validateInputFields()) {
+            const formData = new FormData();
+            formData.append("entry.1403308977", name);
+            formData.append("entry.1024269894", email);
+            formData.append("entry.1621193193", phone);
+            formData.append("entry.509236302", subject);
+            formData.append("entry.2087681545", message);
+
+            try {
+                submitElem.attr("disabled", true);
+                await fetch('https://docs.google.com/forms/d/e/1FAIpQLSdpuTbX85MjyzbPyZpe-UlRWc-BiHpK7twsFeUzWXopmWUKxQ/formResponse', {
+                    method: "POST",
+                    mode: "no-cors",
+                    body: formData
+                });
+                clearFormData();
+                errElem.text("Thank you for filling out your information! I'll get back in touch with you soon! Have a great day!");
+                setTimeout(function() {
+                    errElem.text("");
+                }, 3000);
+            } catch (error) {
+                errElem.text("Something went wrong, please try again.");
+                console.error(error);
+            } finally {
+                submitElem.removeAttr("disabled");
+            }
+        } else {
+            errElem.text('Please fill in all required fields correctly.');
+        }
+    });
+
+    /* input validation */
+    function validateInputFields() {
+        var valid = true;
+        $('.not-valid').removeClass('not-valid');
+        
+        /* Validate name field */
+        var name = $('#contact-name').val();
+        if (name === '') {
+            $('#contact-name').addClass('not-valid');
+            valid = false;
+        }
+
+        /* Validate email field */
+        var email = $('#contact-email').val();
+        if (email === '' || !isValidEmail(email)) {
+            $('#contact-email').addClass('not-valid');
+            valid = false;
+        }
+
+        /* Validate phone field */
+        var phone = $('#contact-phone').val();
+        if (phone === '') {
+            $('#contact-phone').addClass('not-valid');
+            valid = false;
+        }
+
+        /* Validate message field */
+        var message = $('#contact-message').val();
+        if (message === '') {
+            $('#contact-message').addClass('not-valid');
+            valid = false;
+        }
+
+        return valid;
+    }
+
+    /* email validation */
+    function isValidEmail(email) {
+        var emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return emailRegex.test(String(email).toLowerCase());
+    }
+
+    /* Validate on input keyup */
+    $('#contact-form input, #contact-form textarea').on('keyup', function() {
+        validateInputFields();
+    });
+
+    /* clear form data */
+    function clearFormData() {
+        $('#contact-form').find('input[type!="submit"][type!="button"], textarea').val('');
+    }
 
 })(jQuery, window)

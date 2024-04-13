@@ -13842,6 +13842,10 @@ figcaption {
   z-index: 1;
   height: 100%;
 }
+.rn-service-area .service .description{
+  font-size: var(--font-size-b1);
+  margin: 0 0 20px;
+}
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .rn-service {
     padding: 30px 30px 30px 30px;
@@ -14556,7 +14560,7 @@ div#featured-project-carousel {
   color: var(--color-primary);
   display: block;
   font-size: 14px;
-  padding: 0 10px;
+  padding: 0 7px;
   height: 36px;
   line-height: 36px;
   border-radius: 6px;
@@ -19307,8 +19311,17 @@ body.white-version .rn-btn-ulderline {
   color: var(--color-body-white);
   box-shadow: none;
 }
-.white-version .rn-contact-area .contact-form-wrapper input:focus {
+.white-version .rnt-contact-form .response-output{
+  margin-top: 10px;
+}
+.white-version .rnt-contact-form.invalid .response-output{
+  color: var(--color-primary);
+}
+.white-version .rn-contact-area .contact-form-wrapper input.not-valid {
   border: 2px solid var(--color-primary);
+}
+.white-version .rn-contact-area .contact-form-wrapper input:focus {
+  border: 2px solid var(--color-info);
 }
 .white-version .rn-contact-area .contact-form-wrapper textarea {
   background: #fdfefe;
@@ -19317,8 +19330,11 @@ body.white-version .rn-btn-ulderline {
   color: var(--color-body-white);
   box-shadow: none;
 }
-.white-version .rn-contact-area .contact-form-wrapper textarea:focus {
+.white-version .rn-contact-area .contact-form-wrapper textarea.not-valid {
   border: 2px solid var(--color-primary);
+}
+.white-version .rn-contact-area .contact-form-wrapper textarea:focus {
+  border: 2px solid var(--color-info);
 }
 .white-version .rn-contact-area .contact-form-wrapper label {
   color: var(--color-body-white);
@@ -19677,4 +19693,12 @@ body.white-version .rn-btn-ulderline {
 
 .white-version .slider-style-6 .cd-headline span {
   color: var(--color-white) !important;
+}
+
+.map-section iframe{
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  line-height: 1;
+  border: none;
 }
